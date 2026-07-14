@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json()); 
+app.use(express.json());
 app.use(cors());
 
 const authRoutes = require('./routes/auth');
@@ -20,14 +20,14 @@ app.get('/', (req, res) => {
     res.send('CampusConnect API is running...');
 });
 
-const PORT = process.env.PORT || 5000;
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Connected to MongoDB successfully!');
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
     })
     .catch((err) => {
         console.log('Error connecting to MongoDB:', err);
     });
+
+// Export for Vercel
+module.exports = app;
